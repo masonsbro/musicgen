@@ -2,13 +2,15 @@ from django.shortcuts import render, redirect
 from django.core.validators import validate_email
 from django.forms import ValidationError
 
+from musicgenapp.models import *
+
 import hashlib
 import uuid
 
 # Create your views here.
 
 # This is the number of ratings each song should receive before moving to the next generation.
-GENERATION_THRESHOLD = 1
+GENERATION_THRESHOLD = 3
 
 # This is the highest generation that should be reached. After this generation, the song moves into archive mode and can no longer be rated. In archive mode, all iterations of the song are available for listening.
 MAX_GENERATION = 10
@@ -18,9 +20,6 @@ LOWEST_RATING = 40
 
 # This is the highest rating a song can have; above this it is automatically put in archive mode.
 HIGHEST_RATING = 83
-
-# This is the number of ratings a song should have before being considered for deletion according to the LOWEST_RATING above.
-MINIMUM_RATINGS = 3
 
 # These are the error messages to display when a form fails to submit.
 ERROR_NO_EMAIL = "Please enter a valid email address."
