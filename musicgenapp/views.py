@@ -56,7 +56,7 @@ def signup(req):
 			errors.append(ERROR_NO_PASSWORD_MATCH)
 		# If there are errors, return the signup page with errors and prefilled email
 		if errors:
-			return render(req, "signup.html", {'errors': errors, 'email': email})
+			return render(req, "signup.html", {'errors': errors, 'email_prefill': email})
 		else:
 			# If there are no errors, create the user and redirect
 			user = MusicGenUser(email = email, passwordHash = 'hash', passwordSalt = 'salt')
@@ -83,7 +83,7 @@ def login(req):
 			errors.append(ERROR_BAD_LOGIN)
 		# If there are errors, return the login page with errors and prefilled email
 		if errors:
-			return render(req, "login.html", {'errors': errors, 'email': email})
+			return render(req, "login.html", {'errors': errors, 'email_prefill': email})
 		else:
 			# If there are no errors, set the session variable and redirect
 			req.session['email'] = email
