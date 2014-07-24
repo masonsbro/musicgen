@@ -59,7 +59,7 @@ def signup(req):
 			return render(req, "signup.html", {'errors': errors, 'email': email})
 		else:
 			# If there are no errors, create the user and redirect
-			user = MusicGenUser(email = email)
+			user = MusicGenUser(email = email, passwordHash = 'hash', passwordSalt = 'salt')
 			user.setPassword(password)
 			user.save()
 			return redirect("/list/")
