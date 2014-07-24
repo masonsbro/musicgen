@@ -2,4 +2,30 @@ SCHEDULE
 ========
 
 07/24/2014
-	
+	Accounts
+		Forgot password
+07/25/2014
+	Song class
+		List of pitches
+		List of durations
+	List page
+07/26/2014
+	Ratings
+		One per user
+		Max/min
+		Generation (crossover or no?)
+07/27/2014
+	Genetic algorithm
+07/28/2014
+	Genetic algorithm
+07/29/2014
+	Tweak/feedback/test
+07/30/2014
+	Tweak/feedback/test
+07/31/2014
+	Tweak/feedback/test
+08/01/2014
+	Finished product
+
+Stretch goals
+	User ratings shifting
