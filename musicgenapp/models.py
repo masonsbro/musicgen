@@ -6,7 +6,7 @@ from django.db import models
 # Create your models here.
 
 class MusicGenUser:
-	
+
 	email = models.EmailField(unique = True)
 	passwordHash = models.CharField(max_length = 128)
 	passwordSalt = models.CharField(max_length = 32)
@@ -29,3 +29,7 @@ class MusicGenUser:
 		pHashed = hashlib.sha512(pSalted).hexdigest()
 		# Check it against the stored one
 		return self.passwordHash == pHashed
+
+class Song:
+
+	pass
