@@ -4,6 +4,8 @@ SCHEDULE
 07/24/2014
 	Accounts
 		Forgot password
+		Account page
+			Change password
 07/25/2014
 	Song class
 		List of pitches
@@ -13,12 +15,17 @@ SCHEDULE
 	Ratings
 		One per user
 		Max/min
-		Generation (crossover or no?)
+		Generation
+			Crossover?
 07/27/2014
 	Genetic algorithm
 07/28/2014
 	Genetic algorithm
 07/29/2014
+	Song page
+		Archived
+		Past generations
+			Each generation's ratings
 	Tweak/feedback/test
 07/30/2014
 	Tweak/feedback/test
