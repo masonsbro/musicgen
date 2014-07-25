@@ -2,12 +2,10 @@
 
 {% block content %}
 	<div class="container">
-		<h1>Sign Up</h1>
-		<form role="form" action="/signup/" method="POST">
+		<h1>Reset Password</h1>
+		<form role="form" action="/reset/" method="POST">
 			{% csrf_token %}
-			<div class="form-group">
-				<input type="text" placeholder="Email" class="form-control" name="email" value="{{ email_prefill }}">
-			</div>
+			<input type="hidden" name="resetCode" value="{{ resetCode }}">
 			<div class="form-group">
 				<input type="password" placeholder="Password" class="form-control" name="password">
 			</div>
@@ -15,9 +13,8 @@
 				<input type="password" placeholder="Confirm Password" class="form-control" name="password_confirm">
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary">Sign in</button>
+				<button type="submit" class="btn btn-primary">Change Password</button>
 			</div>
 		</form>
-		<p><a href="/login/">Already have an account? Sign in!</a></p>
 	</div>
 {% endblock %}

@@ -7,3 +7,4 @@ psycopg2==2.5.3
 pystache==0.5.4
 static==1.0.2
 wsgiref==0.1.2
+sendgrid>=0.5.0

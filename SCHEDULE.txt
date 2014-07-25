@@ -8,12 +8,15 @@ Key:
 	Each subfeature inherits its parent's properties unless it has its own specified
 
 07/24/2014
-	Accounts
+X	Accounts
 X		Login
 X		Sign up
-		Forgot password
-		Account page
-			Change password
+X		Log out
+X		Forgot password
+X		Account page
+X			Change password
+X			Change email
+*	Fix page titles
 07/25/2014
 *	Song class
 		List of pitches
