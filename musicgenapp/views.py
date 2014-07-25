@@ -12,7 +12,7 @@ import sendgrid
 # Create your views here.
 
 # This is the base URL to link to in emails. EXCLUDE TRAILING SLASH.
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://musicgen.herokuapp.com"
 
 # This is the subject line of the password reset email.
 PW_RESET_SUBJECT = "MusicGen Password Reset"
