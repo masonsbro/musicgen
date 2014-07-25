@@ -4,10 +4,13 @@ SCHEDULE
 Key:
 	* = vital feature
 	# = unimportant feature
-	Each subfeature inherits its parent's prioity unless it has its own specified
+	X = done feature
+	Each subfeature inherits its parent's properties unless it has its own specified
 
 07/24/2014
 	Accounts
+X		Login
+X		Sign up
 		Forgot password
 		Account page
 			Change password
