@@ -16,7 +16,7 @@ X		Forgot password
 X		Account page
 X			Change password
 X			Change email
-*	Fix page titles
+X	Fix page titles
 07/25/2014
 *	Song class
 		List of pitches
