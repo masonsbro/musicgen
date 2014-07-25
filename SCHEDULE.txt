@@ -1,38 +1,41 @@
 SCHEDULE
 ========
 
+Key:
+	* = vital feature
+	# = unimportant feature
+	Each subfeature inherits its parent's prioity unless it has its own specified
+
 07/24/2014
 	Accounts
 		Forgot password
 		Account page
 			Change password
 07/25/2014
-	Song class
+*	Song class
 		List of pitches
 		List of durations
-	List page
+*	List page
 07/26/2014
-	Ratings
+*	Ratings
 		One per user
 		Max/min
 		Generation
 			Crossover?
 07/27/2014
-	Genetic algorithm
+*	Genetic algorithm
 07/28/2014
-	Genetic algorithm
+*	Genetic algorithm
 07/29/2014
-	Song page
+*	Song page
 		Archived
 		Past generations
-			Each generation's ratings
+#			Each generation's ratings
 	Tweak/feedback/test
 07/30/2014
+#	User ratings shifting
 	Tweak/feedback/test
 07/31/2014
 	Tweak/feedback/test
 08/01/2014
-	Finished product
-
-Stretch goals
-	User ratings shifting
+*	Presentation
