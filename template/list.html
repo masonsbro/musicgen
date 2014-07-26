@@ -7,5 +7,37 @@
 {% block content %}
 	<div class="container">
 		<h1>List Songs</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Generation</th>
+					<th>Rating</th><!-- TODO: remove this column to avoid bandwagon rating -->
+					<th>#</th><!-- TODO: remove this too -->
+					<th>Rate</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for song in songs %}
+					<tr>
+						<td>{{ song.pk }}</td>
+						<td>{{ song.generation }}</td>
+						<td>{{ song.avgRating }}</td>
+						<td>{{ song.numRatings }}</td>
+						<td>
+							<form class="form-inline" role="form" action="/rate/" method="POST">
+								<div class="input-group">
+									<input type="text" name="rating" class="form-control">
+									<input type="hidden" name="song" value="{{ song.pk }}">
+									<span class="input-group-btn">
+										<input class="btn btn-primary" type="submit" value="Go">
+									</span>
+								</div>
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 {% endblock %}

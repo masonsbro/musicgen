@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'musicgenapp',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,3 +108,17 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'template'),
 )
+
+# django-storages
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# http instead of https
+AWS_S3_SECURE_URLS = False
+# don't add compelx auth-related query parameters for requests
+AWS_QUERYSTRING_AUTH = False
+# access key id
+AWS_S3_ACCESS_KEY_ID = 'AKIAJENMPVSPWEURXMHA'
+# secret access key
+AWS_S3_SECRET_ACCESS_KEY = '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'
+# storage bucket name
+AWS_STORAGE_BUCKET_NAME = 'musicgen'

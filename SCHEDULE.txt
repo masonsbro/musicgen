@@ -18,6 +18,9 @@ X			Change password
 X			Change email
 X	Fix page titles
 07/25/2014
+*	Song pitch files
+		100 bpm
+		Slice AudioSegments (pydub) to duration
 *	Song class
 		List of pitches
 		List of durations

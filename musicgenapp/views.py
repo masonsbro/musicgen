@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.validators import validate_email
 from django.forms import ValidationError
 from django.core.mail import send_mail
+from django.core.files.storage import default_storage
 
 from musicgenapp.models import *
 
@@ -292,3 +293,14 @@ def login(req, context):
 	else:
 		# GET, so display form
 		return render(req, "login.html")
+
+@check_logged_in
+@only_logged_in
+def random(req, context):
+	wrapper = SongWrapper()
+	wrapper.save()
+	song = Song.random(wrapper)
+	song.save()
+	wrapper.latest = song
+	wrapper.save()
+	return redirect("/list/")

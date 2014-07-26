@@ -1,10 +1,15 @@
 Django==1.6.5
 South==1.0
+boto==2.31.1
 dj-database-url==0.3.0
+django-storages==1.1.8
 django-toolbelt==0.0.1
 gunicorn==19.0.0
 psycopg2==2.5.3
+pydub==0.9.2
 pystache==0.5.4
+sendgrid==0.5.4
+smtpapi==0.1.2
 static==1.0.2
+unittest2==0.5.1
 wsgiref==0.1.2
-sendgrid>=0.5.0

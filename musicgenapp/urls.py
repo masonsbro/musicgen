@@ -12,5 +12,6 @@ urlpatterns = patterns('',
 	url(r'^account/$', views.account),
 	url(r'^logout/$', views.logout),
 	url(r'^reset/$', views.reset),
+	url(r'^random/$', views.random),
 	url(r'^$', views.index),
 )
