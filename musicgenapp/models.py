@@ -5,6 +5,7 @@ import wave
 
 from django.db import models
 from django.core.files.storage import default_storage
+from django.core.files import File
 
 from pydub import AudioSegment
 
@@ -92,8 +93,6 @@ class Song(models.Model):
 			durations.append(8 / inverseDuration)
 
 		obj = cls(pitches = ','.join(map(str, pitches)), durations = ','.join(map(str, durations)), wrapper = wrapper)
-		# Probably bad practice to save here instead of just returning it but whatever... I need the pk in order to make the file
-		obj.save()
 
 		# Finished generating attributes, now generate actual file
 		wav = default_storage.open('songs/' + str(obj.pk) + '.wav', 'wb')
@@ -145,15 +144,22 @@ class Song(models.Model):
 
 		# Copied from AudioSegment source...
 		# I should have changed AudioSegment (getWaveFileContents() or something) and submitted a pull request but I have a deadline
-		wave_data = wave.open(wav)
-		wave_data.setnchannels(self.channels)
-		wave_data.setsampwidth(self.sample_width)
-		wave_data.setframerate(self.frame_rate)
-		wave_data.setnframes(int(self.frame_count()))
-		wave_data.writeframesraw(self._data)
-		wave_data.close()
 
-		wav.close()
+		# Possibly optimize to just have a string packed with data then use ContentFile instead of File below
+		wave_data = wave.open(wav, 'wb')
+		wave_data.setnchannels(final.channels)
+		wave_data.setsampwidth(final.sample_width)
+		wave_data.setframerate(final.frame_rate)
+		wave_data.setnframes(int(final.frame_count()))
+		wave_data.writeframesraw(final._data)
+		wave_data.close()
+		wav.close() # ?
+
+		wav_rb = default_storage.open('songs/' + str(obj.pk) + '.wav', 'rb')
+		obj.wav.save('songs/' + str(obj.pk) + '.wav', File(wav_rb))
+		wav_rb.close()
+
+		obj.save()
 
 		return obj
 

@@ -107,6 +107,7 @@ def about(req, context):
 
 @check_logged_in
 def list(req, context):
+	context['songs'] = Song.objects.filter(latest = True)
 	return render(req, "list.html", context)
 
 @check_logged_in
