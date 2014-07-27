@@ -332,6 +332,7 @@ def rate(req, context):
 				prevRating = None
 			if prevRating is not None:
 				# u best not be trynna vote twice
+				print "prevRating is not None"
 				raise
 			song.addRating(value)
 			print "adding rating of value " + str(value)

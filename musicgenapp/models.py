@@ -163,6 +163,7 @@ class Song(models.Model):
 	def addRating(self, rating):
 		self.avgRating = (self.avgRating * self.numRatings + rating) / (self.numRatings + 1)
 		self.numRatings += 1
+		self.save()
 
 	def mutate(self):
 		# Clone, mutate, return new version, and update wrapper to point to new version

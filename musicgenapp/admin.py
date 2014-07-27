@@ -5,3 +5,5 @@ from musicgenapp.models import *
 
 admin.site.register(MusicGenUser)
 admin.site.register(Song)
+admin.site.register(SongWrapper)
+admin.site.register(Rating)
