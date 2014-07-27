@@ -26,11 +26,10 @@ X		List of pitches
 X		List of durations
 X	List page
 07/26/2014
-*	Ratings
-		One per user
-		Max/min
-		Generation
-			Crossover?
+X	Ratings
+X		One per user
+X		Max/min
+X		Generation
 07/27/2014
 *	Genetic algorithm
 07/28/2014
@@ -44,6 +43,7 @@ X	List page
 07/30/2014
 #	User ratings shifting
 	Tweak/feedback/test
+#	Try and find better sounds instead of the computer generated ones
 07/31/2014
 	Tweak/feedback/test
 08/01/2014

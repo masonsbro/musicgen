@@ -41,7 +41,6 @@ class SongWrapper(models.Model):
 
 	active = models.BooleanField(default = True)
 	latest = models.ForeignKey('Song', null = True, blank = True)
-	generation = models.IntegerField(default = 1)
 
 class Song(models.Model):
 
@@ -94,8 +93,10 @@ class Song(models.Model):
 
 		obj = cls(pitches = ','.join(map(str, pitches)), durations = ','.join(map(str, durations)), wrapper = wrapper)
 
-		# Finished generating attributes, now generate actual file
-		wav = default_storage.open('songs/' + str(obj.pk) + '.wav', 'wb')
+		return obj
+
+	def generateFile(self):
+		wav = default_storage.open('songs/' + str(self.pk) + '.wav', 'wb')
 
 		pitchTable = {
 			0: 'C3',
@@ -134,7 +135,7 @@ class Song(models.Model):
 
 		final = None
 
-		for pitch, duration in zip(pitches, durations):
+		for pitch, duration in zip(self.pitches, self.durations):
 			fn = 'pitches/' + pitchTable[pitch] + '.wav'
 			pf = default_storage.open(fn)
 			if final is None:
@@ -155,17 +156,30 @@ class Song(models.Model):
 		wave_data.close()
 		wav.close() # ?
 
-		wav_rb = default_storage.open('songs/' + str(obj.pk) + '.wav', 'rb')
-		obj.wav.save('songs/' + str(obj.pk) + '.wav', File(wav_rb))
+		wav_rb = default_storage.open('songs/' + str(self.pk) + '.wav', 'rb')
+		self.wav.save('songs/' + str(self.pk) + '.wav', File(wav_rb))
 		wav_rb.close()
 
-		obj.save()
+	def addRating(self, rating):
+		self.avgRating = (self.avgRating * self.numRatings + rating) / (self.numRatings + 1)
+		self.numRatings += 1
 
-		return obj
+	def mutate(self):
+		# Clone, mutate, return new version, and update wrapper to point to new version
+		song = Song(pitches = self.pitches, durations = self.durations, generation = self.generation + 1, wrapper = self.wrapper)
+		self.latest = False
+		self.save()
+		self.wrapper.latest = song
+		self.wrapper.save()
+		# TODO: mutate
+		return song
+
+	def archive(self):
+		self.wrapper.active = False
+		self.wrapper.save()
 
 class Rating(models.Model):
 
 	song = models.ForeignKey('Song')
 	user = models.ForeignKey('MusicGenUser')
-	generation = models.IntegerField()
 	value = models.IntegerField()

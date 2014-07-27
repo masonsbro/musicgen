@@ -62,6 +62,7 @@ ERROR_NO_PASSWORD_MATCH = "Please ensure the passwords match."
 ERROR_BAD_LOGIN = "Email/password combination not found."
 ERROR_CURRENT_PASSWORD = "That's not the correct current password."
 ERROR_MISC = "Sorry, something went wrong!"
+ERROR_SONG_NOT_FOUND = "Could not find a song with that ID."
 
 # These are the success messages to display after a form has been submitted.
 SUCCESS_PASSWORD_RESET = "If the email entered has a MusicGen account, it has been sent an email with instructions for resetting your password."
@@ -262,7 +263,7 @@ def signup(req, context):
 		if password != password_confirm:
 			context['errors'].append(ERROR_NO_PASSWORD_MATCH)
 		# If there are errors, return the signup page with errors and prefilled email
-		if errors:
+		if context['errors']:
 			return render(req, "signup.html", context)
 		else:
 			# If there are no errors, create the user and redirect
@@ -309,14 +310,44 @@ def random(req, context):
 	wrapper.save()
 	song = Song.random(wrapper)
 	song.save()
+	song.generateFile()
+	# idk if this is even necessary, but this method won't get called in production anyway so who cares
+	song.save()
 	wrapper.latest = song
 	wrapper.save()
 	return redirect("/list/")
 
 @check_logged_in
 @only_logged_in
-@init_alerts
 def rate(req, context):
 	if req.method == 'POST':
 		# This should only ever be POSTed
-		
+		value = int(req.POST['rating'])
+		songID = req.POST['song']
+		try:
+			song = Song.objects.get(pk = songID, latest = True, wrapper__active = True)
+			try:
+				prevRating = Rating.objects.get(song = song, user = MusicGenUser.objects.get(email = req.session['email']))
+			except:
+				prevRating = None
+			if prevRating is not None:
+				# u best not be trynna vote twice
+				raise
+			song.addRating(value)
+			rating = Rating(song = song, user = MusicGenUser.objects.get(email = req.session['email']), value = value)
+			rating.save()
+			if song.numRatings >= GENERATION_THRESHOLD:
+				# Move to next generation
+				if song.generation >= MAX_GENERATION or song.avgRating < LOWEST_RATING or song.avgRating > HIGHEST_RATING:
+					# If one of the above conditions is met, we should archive it -- still display in list, but not able to be voted on
+					song.archive()
+				else:
+					newSong = song.mutate()
+					# TODO: try w/o this line?
+					newSong.save()
+					newSong.generateFile()
+					# Or maybe without this one?
+					newSong.save()
+		except:
+			pass
+		redirect("/list/")
