@@ -349,6 +349,6 @@ def rate(req, context):
 					newSong.generateFile()
 					# Or maybe without this one?
 					newSong.save()
-		except:
-			pass
+		except Exception as e:
+			print e
 	return redirect("/list/")
