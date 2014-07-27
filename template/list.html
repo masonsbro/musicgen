@@ -33,6 +33,7 @@
 						<td>{{ song.numRatings }}</td>
 						<td>
 							<form class="form-inline" role="form" action="/rate/" method="POST">
+								{% csrf_token %}
 								<div class="input-group">
 									<input type="text" name="rating" class="form-control">
 									<input type="hidden" name="song" value="{{ song.pk }}">
