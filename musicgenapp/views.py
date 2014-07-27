@@ -44,7 +44,7 @@ SG_USERNAME = "app27699523@heroku.com"
 SG_PASSWORD = "4tnoo5h6"
 
 # This is the number of ratings each song should receive before moving to the next generation.
-GENERATION_THRESHOLD = 3
+GENERATION_THRESHOLD = 2
 
 # This is the highest generation that should be reached. After this generation, the song moves into archive mode and can no longer be rated. In archive mode, all iterations of the song are available for listening.
 MAX_GENERATION = 10
@@ -332,10 +332,8 @@ def rate(req, context):
 				prevRating = None
 			if prevRating is not None:
 				# u best not be trynna vote twice
-				print "prevRating is not None"
 				raise
 			song.addRating(value)
-			print "adding rating of value " + str(value)
 			rating = Rating(song = song, user = MusicGenUser.objects.get(email = req.session['email']), value = value)
 			rating.save()
 			if song.numRatings >= GENERATION_THRESHOLD:
@@ -350,6 +348,6 @@ def rate(req, context):
 					newSong.generateFile()
 					# Or maybe without this one?
 					newSong.save()
-		except Exception as e:
-			print e
+		except:
+			pass
 	return redirect("/list/")

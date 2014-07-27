@@ -70,10 +70,39 @@ class Song(models.Model):
 		# 8 / each duration
 		inverseDurations = []
 
+		# Only generate tunes with diatonic (in the key of C) pitches
+		possiblePitches = [
+			0,
+			#1,
+			2,
+			#3,
+			4,
+			5,
+			#6,
+			7,
+			#8,
+			9,
+			#10,
+			11,
+			12,
+			#13,
+			14,
+			#15,
+			16,
+			17,
+			#18,
+			19,
+			#20,
+			21,
+			#22,
+			23,
+			24,
+		]
+
 		# 8 beats per measure, 4 measures
 		while sum(inverseDurations) < 8 * 4:
 			# Just put in random pitches
-			pitches.append(random.randint(0, 24))
+			pitches.append(random.choice(possiblePitches))
 			remaining = 8 * 4 - sum(inverseDurations)
 			possibleInverseDurations = {8, 4, 2, 1}
 			# Don't go over 4 measures
