@@ -118,7 +118,7 @@ def about(req, context):
 
 @check_logged_in
 def list(req, context):
-	context['songs'] = Song.objects.filter(latest = True)
+	context['songs'] = Song.objects.filter(latest = True).order_by('pk')
 	return render(req, "list.html", context)
 
 @check_logged_in
