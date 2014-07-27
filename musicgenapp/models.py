@@ -164,7 +164,9 @@ class Song(models.Model):
 
 		final = None
 
-		for pitch, duration in zip(self.pitches, self.durations):
+		pitches = map(int, self.pitches.split(','))
+		durations = map(int, self.durations.split(','))
+		for pitch, duration in zip(pitches, durations):
 			fn = 'pitches/' + pitchTable[pitch] + '.wav'
 			pf = default_storage.open(fn)
 			if final is None:

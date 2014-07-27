@@ -352,3 +352,11 @@ def rate(req, context):
 		except:
 			pass
 	return redirect("/list/")
+
+@check_logged_in
+@only_logged_in
+def updateFiles(req, context):
+	songs = Song.objects.all()
+	for song in songs:
+		song.generateFile()
+	return redirect("/list/")

@@ -14,5 +14,6 @@ urlpatterns = patterns('',
 	url(r'^reset/$', views.reset),
 	url(r'^random/$', views.random),
 	url(r'^rate/$', views.rate),
+	url(r'^update/$', views.updateFiles),
 	url(r'^$', views.index),
 )
