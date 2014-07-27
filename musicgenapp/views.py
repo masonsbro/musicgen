@@ -330,7 +330,7 @@ def rate(req, context):
 				prevRating = Rating.objects.get(song = song, user = MusicGenUser.objects.get(email = req.session['email']))
 			except:
 				prevRating = None
-			if prevRating is not None:
+			if prevRating is not None or value > 100 or value < 0:
 				# u best not be trynna vote twice
 				raise
 			song.addRating(value)
