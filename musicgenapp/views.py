@@ -94,6 +94,16 @@ def only_not_logged_in(func):
 			return redirect("/list/")
 	return wrapper
 
+def init_alerts(func):
+	def wrapper(req, context = None, *args, **kwargs):
+		if context is None:
+			context = {}
+		if 'errors' not in context: context['errors'] = []
+		if 'successes' not in context: context['successes'] = []
+		if 'infos' not in context: context['infos'] = []
+		return func(req, context, *args, **kwargs)
+	return wrapper
+
 @check_logged_in
 def index(req, context):
 	if 'email' not in req.session:
@@ -112,6 +122,7 @@ def list(req, context):
 
 @check_logged_in
 @only_not_logged_in
+@init_alerts
 def forgot(req, context):
 	if req.method == 'POST':
 		# POST, so find user and reset password
@@ -121,7 +132,7 @@ def forgot(req, context):
 			try:
 				validate_email(email)
 			except ValidationError:
-				context['errors'] = [ERROR_NO_EMAIL]
+				context['errors'].append(ERROR_NO_EMAIL)
 				# Return early to avoid catchall success message
 				return render(req, "forgot.html", context)
 			user = MusicGenUser.objects.get(email = email)
@@ -144,17 +155,14 @@ def forgot(req, context):
 		except Exception as e:
 			# There was not a user with this email, but act like there was so that h4x0r5 can't brute force check if emails exist
 			print e
-		context['successes'] = [SUCCESS_PASSWORD_RESET]
+		context['successes'].append(SUCCESS_PASSWORD_RESET)
 	return render(req, "forgot.html", context)
 
 @check_logged_in
 @only_not_logged_in
+@init_alerts
 def reset(req, context):
 	if req.method == 'POST':
-		# Initialize errors and successes
-		# TODO: refactor into @init_alerts
-		if 'errors' not in context: context['errors'] = []
-		if 'successes' not in context: context['successes'] = []
 		# The user has submitted the reset form.
 		password = req.POST['password']
 		password_confirm = req.POST['password_confirm']
@@ -207,12 +215,9 @@ def logout(req, context):
 
 @check_logged_in
 @only_logged_in
+@init_alerts
 def account(req, context):
 	if req.method == 'POST':
-		# Initialize errors and successes
-		# TODO: refactor into @init_alerts
-		if 'errors' not in context: context['errors'] = []
-		if 'successes' not in context: context['successes'] = []
 		# The user has already made his changes
 		password = req.POST['password']
 		user = MusicGenUser.objects.get(email = req.session['email'])
@@ -237,13 +242,14 @@ def account(req, context):
 
 @check_logged_in
 @only_not_logged_in
+@init_alerts
 def signup(req, context):
 	if req.method == 'POST':
 		# POST, so get variables
 		email = req.POST['email']
+		context['email_prefill'] = email
 		password = req.POST['password']
 		password_confirm = req.POST['password_confirm']
-		errors = []
 		# Validate email
 		try:
 			validate_email(email)
@@ -251,13 +257,13 @@ def signup(req, context):
 			errors.append(ERROR_NO_EMAIL)
 		# Validate password
 		if not password:
-			errors.append(ERROR_NO_PASSWORD)
+			context['errors'].append(ERROR_NO_PASSWORD)
 		# Validate confirmation password
 		if password != password_confirm:
-			errors.append(ERROR_NO_PASSWORD_MATCH)
+			context['errors'].append(ERROR_NO_PASSWORD_MATCH)
 		# If there are errors, return the signup page with errors and prefilled email
 		if errors:
-			return render(req, "signup.html", {'errors': errors, 'email_prefill': email})
+			return render(req, "signup.html", context)
 		else:
 			# If there are no errors, create the user and redirect
 			user = MusicGenUser(email = email, passwordHash = 'hash', passwordSalt = 'salt')
@@ -270,23 +276,24 @@ def signup(req, context):
 
 @check_logged_in
 @only_not_logged_in
+@init_alerts
 def login(req, context):
 	if req.method == 'POST':
 		# POST, so process login
 		email = req.POST['email']
+		context['email_prefill'] = email
 		password = req.POST['password']
-		errors = []
 		# Check if there is a user with that email address
 		try:
 			user = MusicGenUser.objects.get(email = email)
 			# Compare passwords
 			if not user.checkPassword(password):
-				errors.append(ERROR_BAD_LOGIN)
+				context['errors'].append(ERROR_BAD_LOGIN)
 		except:
-			errors.append(ERROR_BAD_LOGIN)
+			context['errors'].append(ERROR_BAD_LOGIN)
 		# If there are errors, return the login page with errors and prefilled email
 		if errors:
-			return render(req, "login.html", {'errors': errors, 'email_prefill': email})
+			return render(req, "login.html", context)
 		else:
 			# If there are no errors, set the session variable and redirect
 			req.session['email'] = email
@@ -305,3 +312,11 @@ def random(req, context):
 	wrapper.latest = song
 	wrapper.save()
 	return redirect("/list/")
+
+@check_logged_in
+@only_logged_in
+@init_alerts
+def rate(req, context):
+	if req.method == 'POST':
+		# This should only ever be POSTed
+		

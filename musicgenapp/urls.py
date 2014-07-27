@@ -13,5 +13,6 @@ urlpatterns = patterns('',
 	url(r'^logout/$', views.logout),
 	url(r'^reset/$', views.reset),
 	url(r'^random/$', views.random),
+	url(r'^rate/$', views.rate),
 	url(r'^$', views.index),
 )
