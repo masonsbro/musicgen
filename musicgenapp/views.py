@@ -323,7 +323,7 @@ def rate(req, context):
 	if req.method == 'POST':
 		# This should only ever be POSTed
 		value = int(req.POST['rating'])
-		songID = req.POST['song']
+		songID = int(req.POST['song'])
 		try:
 			song = Song.objects.get(pk = songID, latest = True, wrapper__active = True)
 			try:
@@ -334,6 +334,7 @@ def rate(req, context):
 				# u best not be trynna vote twice
 				raise
 			song.addRating(value)
+			print "adding rating of value " + str(value)
 			rating = Rating(song = song, user = MusicGenUser.objects.get(email = req.session['email']), value = value)
 			rating.save()
 			if song.numRatings >= GENERATION_THRESHOLD:
