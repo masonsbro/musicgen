@@ -293,7 +293,7 @@ def login(req, context):
 		except:
 			context['errors'].append(ERROR_BAD_LOGIN)
 		# If there are errors, return the login page with errors and prefilled email
-		if errors:
+		if context['errors']:
 			return render(req, "login.html", context)
 		else:
 			# If there are no errors, set the session variable and redirect
