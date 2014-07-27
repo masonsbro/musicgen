@@ -270,6 +270,7 @@ def signup(req, context):
 			user = MusicGenUser(email = email, passwordHash = 'hash', passwordSalt = 'salt')
 			user.setPassword(password)
 			user.save()
+			req.session['email'] = email
 			return redirect("/list/")
 	else:
 		# GET, so display form
