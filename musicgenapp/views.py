@@ -350,4 +350,4 @@ def rate(req, context):
 					newSong.save()
 		except:
 			pass
-		redirect("/list/")
+	return redirect("/list/")
