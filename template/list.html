@@ -32,16 +32,18 @@
 						<td>{{ song.avgRating }}</td>
 						<td>{{ song.numRatings }}</td>
 						<td>
-							<form class="form-inline" role="form" action="/rate/" method="POST">
-								{% csrf_token %}
-								<div class="input-group">
-									<input type="text" name="rating" class="form-control">
-									<input type="hidden" name="song" value="{{ song.pk }}">
-									<span class="input-group-btn">
-										<input class="btn btn-primary" type="submit" value="Go">
-									</span>
-								</div>
-							</form>
+							{% if song.wrapper.active %}
+								<form class="form-inline" role="form" action="/rate/" method="POST">
+									{% csrf_token %}
+									<div class="input-group">
+										<input type="text" name="rating" class="form-control">
+										<input type="hidden" name="song" value="{{ song.pk }}">
+										<span class="input-group-btn">
+											<input class="btn btn-primary" type="submit" value="Go">
+										</span>
+									</div>
+								</form>
+							{% endif %}
 						</td>
 					</tr>
 				{% endfor %}
