@@ -222,6 +222,13 @@ class Song(models.Model):
 		self.wrapper.active = False
 		self.wrapper.save()
 
+	def hasBeenRatedBy(self, user):
+		try:
+			rating = Rating.objects.get(user = user, song = self)
+			return True
+		except:
+			return False
+
 class Rating(models.Model):
 
 	song = models.ForeignKey('Song')

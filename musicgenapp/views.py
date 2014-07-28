@@ -118,7 +118,11 @@ def about(req, context):
 
 @check_logged_in
 def list(req, context):
-	context['songs'] = Song.objects.filter(latest = True).order_by('pk')
+	songs = Song.objects.filter(latest = True).order_by('pk')
+	context['songs'] = []
+	user = MusicGenUser.objects.get(email = req.session['email'])
+	for song in songs:
+		context['songs'].append((song, song.hasBeenRatedBy(user)))
 	return render(req, "list.html", context)
 
 @check_logged_in
