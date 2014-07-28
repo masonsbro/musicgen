@@ -44,7 +44,7 @@ SG_USERNAME = "app27699523@heroku.com"
 SG_PASSWORD = "4tnoo5h6"
 
 # This is the number of ratings each song should receive before moving to the next generation.
-GENERATION_THRESHOLD = 2
+GENERATION_THRESHOLD = 4
 
 # This is the highest generation that should be reached. After this generation, the song moves into archive mode and can no longer be rated. In archive mode, all iterations of the song are available for listening.
 MAX_GENERATION = 100
