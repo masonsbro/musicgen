@@ -11,6 +11,70 @@ from pydub import AudioSegment
 
 # Create your models here.
 
+pitchTable = {
+	0: 'C3',
+	1: 'Cs3',
+	2: 'D3',
+	3: 'Ds3',
+	4: 'E3',
+	5: 'F3',
+	6: 'Fs3',
+	7: 'G3',
+	8: 'Gs3',
+	9: 'A3',
+	10: 'As3',
+	11: 'B3',
+	12: 'C4',
+	13: 'Cs4',
+	14: 'D4',
+	15: 'Ds4',
+	16: 'E4',
+	17: 'F4',
+	18: 'Fs4',
+	19: 'G4',
+	20: 'Gs4',
+	21: 'A4',
+	22: 'As4',
+	23: 'B4',
+	24: 'C5'
+}
+
+durationTable = {
+	1: 2400,
+	2: 1200,
+	4: 600,
+	8: 300
+}
+
+# Only generate pitches in the key of C
+possiblePitches = [
+	0,
+	#1,
+	2,
+	#3,
+	4,
+	5,
+	#6,
+	7,
+	#8,
+	9,
+	#10,
+	11,
+	12,
+	#13,
+	14,
+	#15,
+	16,
+	17,
+	#18,
+	19,
+	#20,
+	21,
+	#22,
+	23,
+	24,
+]
+
 class MusicGenUser(models.Model):
 
 	email = models.EmailField(unique = True)
@@ -70,35 +134,6 @@ class Song(models.Model):
 		# 8 / each duration
 		inverseDurations = []
 
-		# Only generate tunes with diatonic (in the key of C) pitches
-		possiblePitches = [
-			0,
-			#1,
-			2,
-			#3,
-			4,
-			5,
-			#6,
-			7,
-			#8,
-			9,
-			#10,
-			11,
-			12,
-			#13,
-			14,
-			#15,
-			16,
-			17,
-			#18,
-			19,
-			#20,
-			21,
-			#22,
-			23,
-			24,
-		]
-
 		# 8 beats per measure, 4 measures
 		while sum(inverseDurations) < 8 * 4:
 			# Just put in random pitches
@@ -126,41 +161,6 @@ class Song(models.Model):
 
 	def generateFile(self):
 		wav = default_storage.open('songs/' + str(self.pk) + '.wav', 'wb')
-
-		pitchTable = {
-			0: 'C3',
-			1: 'Cs3',
-			2: 'D3',
-			3: 'Ds3',
-			4: 'E3',
-			5: 'F3',
-			6: 'Fs3',
-			7: 'G3',
-			8: 'Gs3',
-			9: 'A3',
-			10: 'As3',
-			11: 'B3',
-			12: 'C4',
-			13: 'Cs4',
-			14: 'D4',
-			15: 'Ds4',
-			16: 'E4',
-			17: 'F4',
-			18: 'Fs4',
-			19: 'G4',
-			20: 'Gs4',
-			21: 'A4',
-			22: 'As4',
-			23: 'B4',
-			24: 'C5'
-		}
-
-		durationTable = {
-			1: 2400,
-			2: 1200,
-			4: 600,
-			8: 300
-		}
 
 		final = None
 
@@ -197,8 +197,20 @@ class Song(models.Model):
 		self.save()
 
 	def mutate(self):
+		pitches = map(int, self.pitches.split(','))
+		durations = map(int, self.durations.split(','))
+		newPitches = []
+		newDurations = []
+
+		baseMutateChance = 100 - self.avgRating
+		# Mutate pitches
+		for pitch in pitches:
+			if random.randint(0, 100) < baseMutateChance:
+				newPitches.append(random.choice(possiblePitches))
+		newDurations = durations[:]
+
 		# Clone, mutate, return new version, and update wrapper to point to new version
-		song = Song(pitches = self.pitches, durations = self.durations, generation = self.generation + 1, wrapper = self.wrapper)
+		song = Song(pitches = newPitches, durations = newDurations, generation = self.generation + 1, wrapper = self.wrapper)
 		self.latest = False
 		self.save()
 		self.wrapper.latest = song

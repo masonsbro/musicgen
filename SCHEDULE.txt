@@ -31,9 +31,11 @@ X		One per user
 X		Max/min
 X		Generation
 07/27/2014
-*	Genetic algorithm
+*	Genetic algorithm 1
+		Pitches
 07/28/2014
-*	Genetic algorithm
+*	Genetic algorithm 2
+		Durations
 07/29/2014
 *	Song page
 		Archived
