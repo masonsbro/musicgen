@@ -47,13 +47,13 @@ SG_PASSWORD = "4tnoo5h6"
 GENERATION_THRESHOLD = 2
 
 # This is the highest generation that should be reached. After this generation, the song moves into archive mode and can no longer be rated. In archive mode, all iterations of the song are available for listening.
-MAX_GENERATION = 10
+MAX_GENERATION = 100
 
 # This is the lowest rating a song can have; below this it is automatically put in archive mode.
 LOWEST_RATING = 40
 
 # This is the highest rating a song can have; above this it is automatically put in archive mode.
-HIGHEST_RATING = 83
+HIGHEST_RATING = 95
 
 # These are the error messages to display when a form fails to submit.
 ERROR_NO_EMAIL = "Please enter a valid email address."
