@@ -13,8 +13,7 @@
 					<th>ID</th>
 					<th>Listen</th>
 					<th>Generation</th>
-					<th>Rating</th><!-- TODO: remove this column to avoid bandwagon rating -->
-					<th># Ratings</th><!-- TODO: remove this too -->
+					<th># Ratings</th>
 					<th>Rate</th>
 				</tr>
 			</thead>
@@ -29,21 +28,18 @@
 							</audio>
 						</td>
 						<td>{{ song.generation }}</td>
-						<td>{{ song.avgRating }}</td>
 						<td>{{ song.numRatings }}</td>
 						<td>
-							{% if song.wrapper.active %}
-								<form class="form-inline" role="form" action="/rate/" method="POST">
-									{% csrf_token %}
-									<div class="input-group">
-										<input type="text" name="rating" class="form-control">
-										<input type="hidden" name="song" value="{{ song.pk }}">
-										<span class="input-group-btn">
-											<input class="btn btn-primary" type="submit" value="Go">
-										</span>
-									</div>
-								</form>
-							{% endif %}
+							<form class="form-inline" role="form" action="/rate/" method="POST">
+								{% csrf_token %}
+								<div class="input-group">
+									<input type="number" min="0" max="100" value="{{ song.avgRating }}" name="rating" class="form-control" {% if not song.wrapper.active %} disabled {% endif %}>
+									<input type="hidden" name="song" value="{{ song.pk }}">
+									<span class="input-group-btn">
+										<input class="btn btn-primary" type="submit" value="Go">
+									</span>
+								</div>
+							</form>
 						</td>
 					</tr>
 				{% endfor %}
