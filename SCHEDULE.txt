@@ -31,8 +31,8 @@ X		One per user
 X		Max/min
 X		Generation
 07/27/2014
-*	Genetic algorithm 1
-		Pitches
+X	Genetic algorithm 1
+X		Pitches
 07/28/2014
 *	Genetic algorithm 2
 		Durations
