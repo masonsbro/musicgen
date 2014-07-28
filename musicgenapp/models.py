@@ -81,6 +81,7 @@ class MusicGenUser(models.Model):
 	passwordHash = models.CharField(max_length = 128)
 	passwordSalt = models.CharField(max_length = 32)
 	resetCode = models.CharField(max_length = 32, null = True, blank = True, default = "")
+	admin = models.BooleanField(default = False)
 
 	def setPassword(self, password):
 		# Generate random salt
