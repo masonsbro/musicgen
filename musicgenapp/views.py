@@ -95,6 +95,15 @@ def only_not_logged_in(func):
 			return redirect("/list/")
 	return wrapper
 
+def only_admin(func):
+	def wrapper(req, *args, **kwargs):
+		if 'email' in req.session:
+			user = MusicGenUser.objects.get(email = req.session['email'])
+			if user.admin:
+				return func(req, *args, **kwargs)
+		return redirect("/list/")
+	return wrapper
+
 def init_alerts(func):
 	def wrapper(req, context = None, *args, **kwargs):
 		if context is None:
@@ -310,6 +319,7 @@ def login(req, context):
 
 @check_logged_in
 @only_logged_in
+@only_admin
 def random(req, context):
 	wrapper = SongWrapper()
 	wrapper.save()
