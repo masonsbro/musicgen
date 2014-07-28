@@ -39,11 +39,18 @@ pitchTable = {
 	24: 'C5'
 }
 
+#durationTable = {
+#	1: 2400,
+#	2: 1200,
+#	4: 600,
+#	8: 300
+#}
+
 durationTable = {
-	1: 2400,
-	2: 1200,
-	4: 600,
-	8: 300
+	1: 1000,
+	2: 500,
+	4: 250,
+	8: 125
 }
 
 # Only generate pitches in the key of C

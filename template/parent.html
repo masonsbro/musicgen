@@ -26,6 +26,7 @@
 							{% endif %}
 							<li {% block listactive %}{% endblock %}><a href="/list/">List Songs</a></li>
 							<li {% block aboutactive %}{% endblock %}><a href="/about/">About</a></li>
+							{% if email %}{% if user.admin %}<li {% block adminactive %}{% endblock %}><a href="/admind/">Admin</a></li>{% endif %}{% endif %}
 						</ul>
 						{% if email %}
 							<ul class="nav navbar-nav navbar-right">

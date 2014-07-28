@@ -34,8 +34,9 @@ X		Generation
 X	Genetic algorithm 1
 X		Pitches
 07/28/2014
-*	Genetic algorithm 2
-		Durations
+	Admin page
+		Generate new song
+		Rating history
 07/29/2014
 *	Song page
 		Archived

@@ -76,6 +76,8 @@ def check_logged_in(func):
 			context = {}
 		if 'email' in req.session:
 			context['email'] = req.session['email']
+			user = MusicGenUser.objects.get(email = req.session['email'])
+			context['user'] = user
 		return func(req, context, *args, **kwargs)
 	return wrapper
 
@@ -374,3 +376,9 @@ def updateFiles(req, context):
 	for song in songs:
 		song.generateFile()
 	return redirect("/list/")
+
+@check_logged_in
+@only_logged_in
+@only_admin
+def admin(req, context):
+	return render(req, "admin.html", context)
