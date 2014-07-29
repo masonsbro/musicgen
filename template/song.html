@@ -25,10 +25,14 @@
 					<tr>
 						<td><a href="/song/{{ song.pk }}">{{ song.pk }}</a></td>
 						<td>
-							<audio controls>
-								<source src="{{ song.wav.url }}" type="audio/wav">
-								Upgrade yo browser, yo
-							</audio>
+							{% if song.wav %}
+								<audio controls>
+									<source src="{{ song.wav.url }}" type="audio/wav">
+									Upgrade yo browser, yo
+								</audio>
+							{% else %}
+								Error loading file
+							{% endif %}
 						</td>
 						<td>{{ song.generation }}</td>
 						<td>{{ song.numRatings }}</td>
