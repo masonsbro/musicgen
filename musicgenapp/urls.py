@@ -16,5 +16,7 @@ urlpatterns = patterns('',
 	url(r'^rate/$', views.rate),
 	url(r'^update/$', views.updateFiles),
 	url(r'^admind/$', views.admin),
+	url(r'^song/(?P<id>[0-9]+)/$', views.song),
+	url(r'^del/(?P<id>[0-9]+)/$', views.delete),
 	url(r'^$', views.index),
 )

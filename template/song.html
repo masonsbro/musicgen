@@ -1,14 +1,14 @@
 {% extends "parent.html" %}
 
-{% block title %}Admin Dashboard{% endblock %}
+{% block title %}Song Info{% endblock %}
 
-{% block adminactive %}class="active"{% endblock %}
+{% block listactive %}class="active"{% endblock %}
 
 {% block content %}
 	<div class="container">
-		<h1>Admin Dashboard</h1>
+		<h1>Song {{ song.pk }}</h1>
 		<hr>
-		<h2>Songs</h2>
+		<h2>History</h2>
 		<hr>
 		<table class="table">
 			<thead>
@@ -17,17 +17,12 @@
 					<th>Listen</th>
 					<th>Generation</th>
 					<th># Ratings</th>
-					<th>Rate</th>
-					<th>Delete</th>
+					<th>Rating</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for song in songs %}
-					<tr
-					{% if not song.latest %}class="active"
-					{% elif not song.wrapper.active %}class=""
-					{% endif %}
-					>
+				{% for song in history %}
+					<tr>
 						<td>{{ song.pk }}</td>
 						<td>
 							<audio controls>
@@ -38,11 +33,6 @@
 						<td>{{ song.generation }}</td>
 						<td>{{ song.numRatings }}</td>
 						<td>{{ song.avgRating }}</td>
-						<td>
-							<a href="/del/{{ song.pk }}" class="btn btn-danger">
-								<span class="glyphicon glyphicon-trash"></span>
-							</a>
-						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
