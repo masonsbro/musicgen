@@ -23,7 +23,7 @@
 			<tbody>
 				{% for song in history %}
 					<tr>
-						<td>{{ song.pk }}</td>
+						<td><a href="/song/{{ song.pk }}">{{ song.pk }}</a></td>
 						<td>
 							<audio controls>
 								<source src="{{ song.wav.url }}" type="audio/wav">
