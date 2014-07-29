@@ -50,7 +50,7 @@ GENERATION_THRESHOLD = 3
 MAX_GENERATION = 100
 
 # This is the lowest rating a song can have; below this it is automatically put in archive mode.
-LOWEST_RATING = 40
+LOWEST_RATING = 30
 
 # This is the highest rating a song can have; above this it is automatically put in archive mode.
 HIGHEST_RATING = 95
@@ -334,7 +334,7 @@ def random(req, context):
 	song.save()
 	wrapper.latest = song
 	wrapper.save()
-	return redirect("/list/")
+	return redirect("/admind/")
 
 @check_logged_in
 @only_logged_in
@@ -384,7 +384,7 @@ def updateFiles(req, context):
 @only_admin
 def admin(req, context):
 	# TODO: limit 20 or so?
-	context['songs'] = Song.objects.all()
+	context['songs'] = Song.objects.all().order_by('-pk')
 	return render(req, "admin.html", context)
 
 @check_logged_in
@@ -400,4 +400,15 @@ def song(req, context, id):
 def delete(req, context, id):
 	song = Song.objects.get(pk = id)
 	song.delete()
+	return redirect("/admind/")
+
+@check_logged_in
+@only_logged_in
+@only_admin
+def mutate(req, context, id):
+	song = Song.objects.get(pk = id)
+	newSong = song.mutate()
+	newSong.save()
+	newSong.generateFile()
+	newSong.save()
 	return redirect("/admind/")

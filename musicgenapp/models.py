@@ -216,11 +216,13 @@ class Song(models.Model):
 		newPitches = []
 		newDurations = []
 
-		baseMutateChance = 100 - self.avgRating
+		baseMutateChance = (100 - self.avgRating) / 2
 		# Mutate pitches
 		for pitch in pitches:
 			if random.randint(0, 100) < baseMutateChance:
 				newPitches.append(random.choice(possiblePitches))
+			else:
+				newPitches.append(pitch)
 		newDurations = durations[:]
 
 		# Clone, mutate, return new version, and update wrapper to point to new version
@@ -229,7 +231,6 @@ class Song(models.Model):
 		self.save()
 		self.wrapper.latest = song
 		self.wrapper.save()
-		# TODO: mutate
 		return song
 
 	def archive(self):

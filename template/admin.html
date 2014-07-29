@@ -8,6 +8,10 @@
 	<div class="container">
 		<h1>Admin Dashboard</h1>
 		<hr>
+		<a href="/random/" class="btn btn-primary" style="float: right">
+			<span class="glyphicon glyphicon-music"></span>&nbsp;
+			Random
+		</a>
 		<h2>Songs</h2>
 		<hr>
 		<table class="table">
@@ -17,7 +21,8 @@
 					<th>Listen</th>
 					<th>Generation</th>
 					<th># Ratings</th>
-					<th>Rate</th>
+					<th>Rating</th>
+					<th>Mutate</th>
 					<th>Delete</th>
 				</tr>
 			</thead>
@@ -25,7 +30,7 @@
 				{% for song in songs %}
 					<tr
 					{% if not song.latest %}class="active"
-					{% elif not song.wrapper.active %}class=""
+					{% elif not song.wrapper.active %}class="primary"
 					{% endif %}
 					>
 						<td>{{ song.pk }}</td>
@@ -38,6 +43,11 @@
 						<td>{{ song.generation }}</td>
 						<td>{{ song.numRatings }}</td>
 						<td>{{ song.avgRating }}</td>
+						<td>
+							<a href="/mut/{{ song.pk }}" class="btn btn-primary">
+								<span class="glyphicon glyphicon-random"></span>
+							</a>
+						</td>
 						<td>
 							<a href="/del/{{ song.pk }}" class="btn btn-danger">
 								<span class="glyphicon glyphicon-trash"></span>

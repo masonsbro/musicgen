@@ -18,5 +18,6 @@ urlpatterns = patterns('',
 	url(r'^admind/$', views.admin),
 	url(r'^song/(?P<id>[0-9]+)/$', views.song),
 	url(r'^del/(?P<id>[0-9]+)/$', views.delete),
+	url(r'^mut/(?P<id>[0-9]+)/$', views.mutate),
 	url(r'^$', views.index),
 )
