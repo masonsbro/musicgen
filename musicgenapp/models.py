@@ -47,10 +47,10 @@ pitchTable = {
 #}
 
 durationTable = {
-	1: 1600,
-	2: 800,
-	4: 400,
-	8: 200
+#	1: 1600,
+#	2: 800,
+	4: 600,
+	8: 300
 }
 
 # Only generate pitches in the key of C
@@ -83,7 +83,7 @@ durationTable = {
 #]
 
 possiblePitches = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24]
-initPossibleInverseDurations = [2, 4, 8]
+initPossibleInverseDurations = [1, 2]
 
 class MusicGenUser(models.Model):
 
