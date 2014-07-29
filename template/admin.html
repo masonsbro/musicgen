@@ -33,7 +33,7 @@
 					{% elif not song.wrapper.active %}class="primary"
 					{% endif %}
 					>
-						<td>{{ song.pk }}</td>
+						<td><a href="/song/{{ song.pk }}/">{{ song.pk }}</a></td>
 						<td>
 							<audio controls>
 								<source src="{{ song.wav.url }}" type="audio/wav">
@@ -44,12 +44,12 @@
 						<td>{{ song.numRatings }}</td>
 						<td>{{ song.avgRating }}</td>
 						<td>
-							<a href="/mut/{{ song.pk }}" class="btn btn-primary">
+							<a href="/mut/{{ song.pk }}/" class="btn btn-primary">
 								<span class="glyphicon glyphicon-random"></span>
 							</a>
 						</td>
 						<td>
-							<a href="/del/{{ song.pk }}" class="btn btn-danger">
+							<a href="/del/{{ song.pk }}/" class="btn btn-danger">
 								<span class="glyphicon glyphicon-trash"></span>
 							</a>
 						</td>
@@ -57,5 +57,13 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		<hr>
+		<h2>Recent Ratings</h2>
+		<hr>
+		{% for rating in ratings %}
+			<p>
+				{{ rating.user.email }} rated song <a href="/song/{{ song.pk }}/">{{ rating.song.pk }}</a> {{ rating.value }}/100.
+			</p>
+		{% endfor %}
 	</div>
 {% endblock %}

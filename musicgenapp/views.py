@@ -384,7 +384,8 @@ def updateFiles(req, context):
 @only_admin
 def admin(req, context):
 	# TODO: limit 20 or so?
-	context['songs'] = Song.objects.all().order_by('-pk')
+	context['songs'] = Song.objects.order_by('-pk')
+	context['ratings'] = Rating.objects.order_by('-pk')[0:20]
 	return render(req, "admin.html", context)
 
 @check_logged_in
