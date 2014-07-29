@@ -155,14 +155,16 @@ class Song(models.Model):
 			# Don't go over 4 measures
 			# TODO: optimize?
 			if remaining < 2:
-				possibleInverseDurations.remove(8)
-				possibleInverseDurations.remove(4)
+				#possibleInverseDurations.remove(8)
+				#possibleInverseDurations.remove(4)
 				possibleInverseDurations.remove(2)
 			elif remaining < 4:
-				possibleInverseDurations.remove(8)
-				possibleInverseDurations.remove(4)
+				pass
+				#possibleInverseDurations.remove(8)
+				#possibleInverseDurations.remove(4)
 			elif remaining < 8:
-				possibleInverseDurations.remove(8)
+				pass
+				#possibleInverseDurations.remove(8)
 			inverseDuration = random.choice(tuple(possibleInverseDurations))
 			inverseDurations.append(inverseDuration)
 			durations.append(8 / inverseDuration)
