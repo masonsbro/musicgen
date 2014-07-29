@@ -83,6 +83,7 @@ durationTable = {
 #]
 
 possiblePitches = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24]
+initPossibleInverseDurations = [2, 4, 8]
 
 class MusicGenUser(models.Model):
 
@@ -150,7 +151,7 @@ class Song(models.Model):
 			pitches.append(random.choice(possiblePitches))
 			print pitches
 			remaining = 8 * 4 - sum(inverseDurations)
-			possibleInverseDurations = {8, 4, 2, 1}
+			possibleInverseDurations = set(initPossibleInverseDurations)
 			# Don't go over 4 measures
 			# TODO: optimize?
 			if remaining < 2:
