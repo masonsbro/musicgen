@@ -27,7 +27,7 @@
 			<tbody>
 				{% for song, hasRated in songs %}
 					<tr>
-						<td><a href="/song/{{ song.pk }}">{{ song.pk }}</a></td>
+						<td><a href="/song/{{ song.pk }}/">{{ song.pk }}</a></td>
 						<td>
 							{% if song.wav %}
 								<audio controls>
@@ -39,18 +39,17 @@
 							{% endif %}
 						</td>
 						<td>{{ song.generation }}</td>
-						<td>{{ song.numRatings }}</td>
+						<td id="num{{ song.pk }}">{{ song.numRatings }}</td>
 						<td>
-							<form class="form-inline" role="form" action="/rate/" method="POST">
-								{% csrf_token %}
+							<form class="form-inline" role="form" onsubmit="rate({{ song.pk }});" action="javascript:void(0)">
 								<div class="input-group">
-									<input type="number" min="0" max="100" value="{{ song.avgRating }}" name="rating" class="form-control"
+									<input type="number" min="0" max="100" value="{{ song.avgRating }}" name="rating" id="rate{{ song.pk }}" class="form-control"
 									{% if not song.wrapper.active %} disabled {% endif %}
 									{% if hasRated %} disabled {% endif %}
 									>
 									<input type="hidden" name="song" value="{{ song.pk }}">
 									<span class="input-group-btn">
-										<input class="btn btn-primary" type="submit" value="Go">
+										<input type="submit" class="btn btn-primary" value="Go">
 									</span>
 								</div>
 							</form>
@@ -60,4 +59,8 @@
 			</tbody>
 		</table>
 	</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/list.js"></script>
 {% endblock %}

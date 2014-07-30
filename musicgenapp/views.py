@@ -338,12 +338,11 @@ def random(req, context):
 
 @check_logged_in
 @only_logged_in
-def rate(req, context):
-	if req.method == 'POST':
-		# This should only ever be POSTed
-		value = int(req.POST['rating'])
-		songID = int(req.POST['song'])
+def rate(req, context, id, rating):
+	if req.method == 'GET':
 		try:
+			value = int(rating)
+			songID = int(id)
 			song = Song.objects.get(pk = songID, latest = True, wrapper__active = True)
 			try:
 				prevRating = Rating.objects.get(song = song, user = MusicGenUser.objects.get(email = req.session['email']))
@@ -369,7 +368,6 @@ def rate(req, context):
 					newSong.save()
 		except:
 			pass
-	return redirect("/list/")
 
 @check_logged_in
 @only_logged_in
