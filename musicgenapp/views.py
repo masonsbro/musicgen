@@ -372,11 +372,10 @@ def rate(req, context, id, rating):
 
 @check_logged_in
 @only_logged_in
-def updateFiles(req, context):
-	songs = Song.objects.all()
-	for song in songs:
-		song.generateFile()
-	return redirect("/list/")
+def updateFiles(req, context, id):
+	song = Song.objects.get(pk = id)
+	song.generateFile()
+	return redirect("/admind/")
 
 @check_logged_in
 @only_logged_in

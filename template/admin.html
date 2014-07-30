@@ -22,6 +22,7 @@
 					<th>Generation</th>
 					<th># Ratings</th>
 					<th>Rating</th>
+					<th>Update</th>
 					<th>Mutate</th>
 					<th>Delete</th>
 				</tr>
@@ -47,6 +48,11 @@
 						<td>{{ song.generation }}</td>
 						<td>{{ song.numRatings }}</td>
 						<td>{{ song.avgRating }}</td>
+						<td>
+							<a href="/udpate/{{ song.pk }}/" class="btn btn-primary">
+								<span class="glyphicon glyphicon-refresh"></span>
+							</a>
+						</td>
 						<td>
 							<a href="/mut/{{ song.pk }}/" class="btn btn-primary">
 								<span class="glyphicon glyphicon-random"></span>
