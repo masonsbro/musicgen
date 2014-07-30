@@ -26,7 +26,7 @@
 			</thead>
 			<tbody>
 				{% for song, hasRated in songs %}
-					<tr>
+					<tr {% if not song.wrapper.active %}class="active"{% endif %}>
 						<td><a href="/song/{{ song.pk }}/">{{ song.pk }}</a></td>
 						<td>
 							{% if song.wav %}
