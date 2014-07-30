@@ -13,22 +13,34 @@
 			MusicGen is a website that generates short musical pieces and uses user-provided ratings to determine how good each one sounds. They change over time to generate better and better songs. We hope that eventually the best samples reflect what is already known about music theory.
 		</p>
 		<p>
-			Paragraph 2.
+			MusicGen offers a unique experience for its users in which instead of only being able to listen to music, they can directly influence its evolution through their ratings. This creates a much more interactive environment for music consumption and encourages users to truly think about the music they're listening to.
 		</p>
-		<p>
-			Paragraph 2.
-		</p>
-		<p>
-			Paragraph 2.
-		</p>
-		<p>
-			Paragraph 2.
-		</p>
+		<hr>
 		<h2>
 			Why was MusicGen started?
 		</h2>
 		<p>
 			Ethan Arnold had the idea for MusicGen in early 2014, but lacked the time to create it. While attending the Stanford Pre-Collegiate Studies summer camp for the class on Artificial Intelligence, he realized that he needed a final project using some type of AI. He decided to create this website based on the idea he had earlier, with the help of Daniel Salz.
+		</p>
+		<hr>
+		<h2>
+			How does it work?
+		</h2>
+		<p>
+			Site administrators can generate random music samples. These use random pitches in the key of C between C3 and C5, inclusive. Each pitch is assigned a duration, either 300 ms or 600 ms, such that the durations sum to 9.6 seconds (4 measures of quarter notes with durations of 600 ms).
+		</p>
+		<p>
+			Once a song receives enough ratings, it is checked for meeting certain criteria. If its average rating for the current generation is less than 30 or above 95, it is put into "archive mode" for being either too good or too bad. Otherwise, it mutates.
+		</p>
+		<p>
+			When a song mutates, each pitch has a (100 - average rating) / 2 percent chance of changing to a new random pitch. The new song is added to the List Songs page and can be rated, and the old one is removed. A song's evolution history can be found by clicking its ID in the song list.
+		</p>
+		<hr>
+		<h2>
+			Why is it important?
+		</h2>
+		<p>
+			Most people listen to music without actively thinking about how it was created. MusicGen allows users to understand the creative process by listening to music generated randomly by computers.
 		</p>
 	</div>
 {% endblock %}
