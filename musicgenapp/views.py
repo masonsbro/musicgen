@@ -135,7 +135,8 @@ def list(req, context):
 	for song in songs:
 		context['songs'].append((song, song.hasBeenRatedBy(user)))
 	otherSongs = Song.objects.filter(latest = True, wrapper__active = False).order_by('-pk')
-	context['songs'].extend(otherSongs)
+	for song in otherSongs:
+		context['songs'].append((song, False))
 	return render(req, "list.html", context)
 
 @check_logged_in
