@@ -34,19 +34,18 @@ X		Generation
 X	Genetic algorithm 1
 X		Pitches
 07/28/2014
-	Admin page
-		Generate new song
-		Rating history
+X	Admin page
+X		Generate new song
+X		Rating history
 07/29/2014
-*	Song page
-		Archived
-		Past generations
-#			Each generation's ratings
-	Tweak/feedback/test
+X	Song page
+X		Archived
+X		Past generations
+X			Each generation's ratings
+X	Tweak/feedback/test
 07/30/2014
-#	User ratings shifting
-	Tweak/feedback/test
-#	Try and find better sounds instead of the computer generated ones
+X	Tweak/feedback/test
+X	Try and find better sounds instead of the computer generated ones
 07/31/2014
 	Tweak/feedback/test
 08/01/2014
