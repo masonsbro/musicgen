@@ -82,11 +82,32 @@
 		<hr>
 		<h2>Recent Ratings</h2>
 		<hr>
-		{% for rating in ratings %}
-			<p>
-				{{ rating.user.email }} rated song <a href="/song/{{ song.pk }}/">{{ rating.song.pk }}</a> {{ rating.value }}/100.
-			</p>
-		{% endfor %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>User</th>
+					<th>Song</th>
+					<th>Rating</th>
+					<th>Average</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for rating in ratings %}
+					<tr {% if rating.isExtreme %}class="danger"{% endif %}>
+						<td>{{ rating.user.email }}</td>
+						<td><a href="/song/{{ rating.song.pk }}/">{{ rating.song.pk }}</a></td>
+						<td>{{ rating.value }}</td>
+						<td>{{ rating.song.avgRating }}</td>
+						<td>
+							<a href="/delR/{{ rating.pk }}/" class="btn btn-danger">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 		<ul class="pager">
 			{% if prevRating %}
 				<li class="previous"><a href="/admind/{{ songPage }}/{{ prevRatingPage }}/">&larr; Previous</a></li>

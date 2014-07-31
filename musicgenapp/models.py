@@ -250,3 +250,7 @@ class Rating(models.Model):
 	song = models.ForeignKey('Song')
 	user = models.ForeignKey('MusicGenUser')
 	value = models.IntegerField()
+
+	def isExtreme(self):
+		# Is this rating more than 30 away from the song's average?
+		return self.value - self.song.avgRating > 30 or self.song.avgRating - self.value > 30
