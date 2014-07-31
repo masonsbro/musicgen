@@ -416,7 +416,6 @@ def mutate(req, context, id):
 	song = Song.objects.get(pk = id)
 	baseSong = Song.objects.filter(wrapper = song.wrapper).order_by('-avgRating')[0]
 	newSong = baseSong.mutate(song.generation + 1)
-	newSong = song.mutate()
 	newSong.save()
 	newSong.generateFile()
 	newSong.save()
