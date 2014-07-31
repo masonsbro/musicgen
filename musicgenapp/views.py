@@ -453,3 +453,11 @@ def mutate(req, context, id):
 	newSong.generateFile()
 	newSong.save()
 	return redirect("/admind/")
+
+@check_logged_in
+@only_logged_in
+@only_admin
+def user(req, context, id):
+	user = MusicGenUser.objects.get(pk = id)
+	####### TODO
+	return render(req, "user.html", context)
