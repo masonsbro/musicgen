@@ -229,7 +229,6 @@ class Song(models.Model):
 		if generation is None:
 			generation = self.generation + 1
 		song = Song(pitches = ','.join(map(str, newPitches)), durations = ','.join(map(str, newDurations)), generation = generation, wrapper = self.wrapper)
-		self.latest = False
 		self.save()
 		self.wrapper.latest = song
 		self.wrapper.save()
