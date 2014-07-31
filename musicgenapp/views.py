@@ -50,10 +50,10 @@ GENERATION_THRESHOLD = 3
 MAX_GENERATION = 100
 
 # This is the lowest rating a song can have; below this it is automatically put in archive mode.
-LOWEST_RATING = 30
+LOWEST_RATING = 40
 
 # This is the highest rating a song can have; above this it is automatically put in archive mode.
-HIGHEST_RATING = 95
+HIGHEST_RATING = 90
 
 # These are the error messages to display when a form fails to submit.
 ERROR_NO_EMAIL = "Please enter a valid email address."
