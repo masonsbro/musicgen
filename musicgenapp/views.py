@@ -367,7 +367,9 @@ def rate(req, context, id, rating):
 					# If one of the above conditions is met, we should archive it -- still display in list, but not able to be voted on
 					song.archive()
 				else:
-					newSong = song.mutate()
+					# Base song is highest song from past
+					baseSong = Song.objects.filter(wrapper = song.wrapper).order_by('-avgRating')[0]
+					newSong = baseSong.mutate(song.generation + 1)
 					# TODO: try w/o this line?
 					newSong.save()
 					newSong.generateFile()
@@ -412,6 +414,8 @@ def delete(req, context, id):
 @only_admin
 def mutate(req, context, id):
 	song = Song.objects.get(pk = id)
+	baseSong = Song.objects.filter(wrapper = song.wrapper).order_by('-avgRating')[0]
+	newSong = baseSong.mutate(song.generation + 1)
 	newSong = song.mutate()
 	newSong.save()
 	newSong.generateFile()

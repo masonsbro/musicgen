@@ -210,7 +210,7 @@ class Song(models.Model):
 		self.numRatings += 1
 		self.save()
 
-	def mutate(self):
+	def mutate(self, generation = None):
 		pitches = map(int, self.pitches.split(','))
 		durations = map(int, self.durations.split(','))
 		newPitches = []
@@ -226,7 +226,9 @@ class Song(models.Model):
 		newDurations = durations[:]
 
 		# Clone, mutate, return new version, and update wrapper to point to new version
-		song = Song(pitches = ','.join(map(str, newPitches)), durations = ','.join(map(str, newDurations)), generation = self.generation + 1, wrapper = self.wrapper)
+		if generation is None:
+			generation = self.generation + 1
+		song = Song(pitches = ','.join(map(str, newPitches)), durations = ','.join(map(str, newDurations)), generation = generation, wrapper = self.wrapper)
 		self.latest = False
 		self.save()
 		self.wrapper.latest = song
