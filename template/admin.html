@@ -67,6 +67,18 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		<ul class="pager">
+			{% if prevSong %}
+				<li class="previous"><a href="/admind/{{ prevSongPage }}/{{ ratingPage }}/">&larr; Previous</a></li>
+			{% else %}
+				<li class="previous disabled"><a href="/admind/{{ songPage }}/{{ ratingPage }}/">&larr; Previous</a></li>
+			{% endif %}
+			{% if nextSong %}
+				<li class="next"><a href="/admind/{{ nextSongPage }}/{{ ratingPage }}/">Next &rarr;</a></li>
+			{% else %}
+				<li class="next disabled"><a href="/admind/{{ songPage }}/{{ ratingPage }}/">Next &rarr;</a></li>
+			{% endif %}
+		</ul>
 		<hr>
 		<h2>Recent Ratings</h2>
 		<hr>
@@ -75,5 +87,17 @@
 				{{ rating.user.email }} rated song <a href="/song/{{ song.pk }}/">{{ rating.song.pk }}</a> {{ rating.value }}/100.
 			</p>
 		{% endfor %}
+		<ul class="pager">
+			{% if prevRating %}
+				<li class="previous"><a href="/admind/{{ songPage }}/{{ prevRatingPage }}/">&larr; Previous</a></li>
+			{% else %}
+				<li class="previous disabled"><a href="/admind/{{ songPage }}/{{ ratingPage }}/">&larr; Previous</a></li>
+			{% endif %}
+			{% if nextRating %}
+				<li class="next"><a href="/admind/{{ songPage }}/{{ nextRatingPage }}/">Next &rarr;</a></li>
+			{% else %}
+				<li class="next disabled"><a href="/admind/{{ songPage }}/{{ ratingPage }}/">Next &rarr;</a></li>
+			{% endif %}
+		</ul>
 	</div>
 {% endblock %}

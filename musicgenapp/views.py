@@ -56,6 +56,14 @@ MAX_GENERATION = 100
 # This is the highest rating a song can have; above this it is automatically put in archive mode.
 HIGHEST_RATING = 90
 
+# This is the number of songs to display on each page of the admin dashboard.
+SONGS_PER_ADMIN = 20
+
+# This is the number of ratings to display on each page of the admin dashboard.
+RATINGS_PER_ADMIN = 20
+
+# This is the number of songs to display on each page of the list songs page. TODO
+
 # These are the error messages to display when a form fails to submit.
 ERROR_NO_EMAIL = "Please enter a valid email address."
 ERROR_NO_PASSWORD = "Please enter a valid password."
@@ -390,10 +398,34 @@ def updateFiles(req, context, id):
 @check_logged_in
 @only_logged_in
 @only_admin
-def admin(req, context):
-	# TODO: limit 20 or so?
-	context['songs'] = Song.objects.order_by('-pk')
-	context['ratings'] = Rating.objects.order_by('-pk')[0:20]
+def admin(req, context, songPage = 0, ratingPage = 0):
+	songPage = int(songPage)
+	ratingPage = int(ratingPage)
+	songStart = songPage * SONGS_PER_ADMIN
+	ratingStart = ratingPage * RATINGS_PER_ADMIN
+	context['prevSongPage'] = songPage - 1
+	context['songPage'] = songPage
+	context['nextSongPage'] = songPage + 1
+	context['prevRatingPage'] = ratingPage - 1
+	context['ratingPage'] = ratingPage
+	context['nextRatingPage'] = ratingPage + 1
+	# Go 1 further to check for next button
+	songs = Song.objects.order_by('-pk')[songStart:(songStart + SONGS_PER_ADMIN + 1)]
+	ratings = Rating.objects.order_by('-pk')[ratingStart:(ratingStart + RATINGS_PER_ADMIN + 1)]
+	context['songs'] = songs[0:SONGS_PER_ADMIN]
+	context['ratings'] = ratings[0:RATINGS_PER_ADMIN]
+	try:
+		n = songs[SONGS_PER_ADMIN]
+		context['nextSong'] = True
+	except:
+		context['nextSong'] = False
+	context['prevSong'] = False if songPage == 0 else True
+	try:
+		n = ratings[RATINGS_PER_ADMIN]
+		context['nextRating'] = True
+	except:
+		context['nextRating'] = False
+	context['prevRating'] = False if ratingPage == 0 else True
 	return render(req, "admin.html", context)
 
 @check_logged_in
