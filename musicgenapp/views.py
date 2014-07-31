@@ -62,8 +62,6 @@ SONGS_PER_ADMIN = 20
 # This is the number of ratings to display on each page of the admin dashboard.
 RATINGS_PER_ADMIN = 20
 
-# This is the number of songs to display on each page of the list songs page. TODO
-
 # These are the error messages to display when a form fails to submit.
 ERROR_NO_EMAIL = "Please enter a valid email address."
 ERROR_NO_PASSWORD = "Please enter a valid password."
