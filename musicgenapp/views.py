@@ -63,6 +63,7 @@ ERROR_BAD_LOGIN = "Email/password combination not found."
 ERROR_CURRENT_PASSWORD = "That's not the correct current password."
 ERROR_MISC = "Sorry, something went wrong!"
 ERROR_SONG_NOT_FOUND = "Could not find a song with that ID."
+ERROR_ALREADY_EXISTS = "A user with that email address already exists."
 
 # These are the success messages to display after a form has been submitted.
 SUCCESS_PASSWORD_RESET = "If the email entered has a MusicGen account, it has been sent an email with instructions for resetting your password."
@@ -273,13 +274,18 @@ def signup(req, context):
 		try:
 			validate_email(email)
 		except ValidationError:
-			errors.append(ERROR_NO_EMAIL)
+			context['errors'].append(ERROR_NO_EMAIL)
 		# Validate password
 		if not password:
 			context['errors'].append(ERROR_NO_PASSWORD)
 		# Validate confirmation password
 		if password != password_confirm:
 			context['errors'].append(ERROR_NO_PASSWORD_MATCH)
+		try:
+			prev = MusicGenUser.objects.get(email = email)
+			context['errors'].append(ERROR_ALREADY_EXISTS)
+		except:
+			pass
 		# If there are errors, return the signup page with errors and prefilled email
 		if context['errors']:
 			return render(req, "signup.html", context)
