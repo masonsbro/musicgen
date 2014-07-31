@@ -50,7 +50,8 @@ GENERATION_THRESHOLD = 3
 MAX_GENERATION = 100
 
 # This is the lowest rating a song can have; below this it is automatically put in archive mode.
-LOWEST_RATING = 40
+# CURRENTLY NOT IMPLEMENTED
+#LOWEST_RATING = 40
 
 # This is the highest rating a song can have; above this it is automatically put in archive mode.
 HIGHEST_RATING = 90
