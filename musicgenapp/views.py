@@ -363,7 +363,7 @@ def rate(req, context, id, rating):
 			rating.save()
 			if song.numRatings >= GENERATION_THRESHOLD:
 				# Move to next generation
-				if song.generation >= MAX_GENERATION or song.avgRating < LOWEST_RATING or song.avgRating > HIGHEST_RATING:
+				if song.generation >= MAX_GENERATION or song.avgRating > HIGHEST_RATING:
 					# If one of the above conditions is met, we should archive it -- still display in list, but not able to be voted on
 					song.archive()
 				else:
