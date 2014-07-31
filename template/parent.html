@@ -26,7 +26,7 @@
 							{% endif %}
 							<li {% block listactive %}{% endblock %}><a href="/list/">List Songs</a></li>
 							<li {% block aboutactive %}{% endblock %}><a href="/about/">About</a></li>
-							<li><a href="https://github.com/masonsbro/musicgen/issues">Issues</a></li>
+							<li><a href="https://github.com/masonsbro/musicgen">Github</a></li>
 							{% if email %}{% if user.admin %}<li {% block adminactive %}{% endblock %}><a href="/admind/">Admin</a></li>{% endif %}{% endif %}
 						</ul>
 						{% if email %}
@@ -95,6 +95,7 @@
 				<hr>
 
 				<footer>
+					<p style="float: right"><a href="https://github.com/masonsbro/musicgen/issues/new">Report an issue</a></p>
 					<p>&copy; Ethan Arnold / Daniel Salz 2014</p>
 				</footer>
 			</div>
