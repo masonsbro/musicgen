@@ -384,6 +384,7 @@ def rate(req, context, id, rating):
 					# Base song is highest song from past
 					baseSong = Song.objects.filter(wrapper = song.wrapper).order_by('-avgRating')[0]
 					song.latest = False
+					song.save()
 					newSong = baseSong.mutate(song.generation + 1)
 					# TODO: try w/o this line?
 					newSong.save()
@@ -472,6 +473,7 @@ def delete(req, context, id, page):
 def mutate(req, context, id, page):
 	song = Song.objects.get(pk = id)
 	song.latest = False
+	song.save()
 	baseSong = Song.objects.filter(wrapper = song.wrapper).order_by('-avgRating')[0]
 	newSong = baseSong.mutate(song.generation + 1)
 	newSong.save()
