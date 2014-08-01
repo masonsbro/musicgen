@@ -1,0 +1,44 @@
+{% extends "admin.html" %}
+
+{% block adminratingsactive %}class="active"{% endblock %}
+
+{% block admincontent %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>User</th>
+				<th>Song</th>
+				<th>Rating</th>
+				<th>Average</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for rating in ratings %}
+				<tr {% if rating.isExtreme %}class="danger"{% endif %}>
+					<td>{{ rating.user.email }}</td>
+					<td><a href="/song/{{ rating.song.pk }}/">{{ rating.song.pk }}</a></td>
+					<td>{{ rating.value }}</td>
+					<td>{{ rating.song.avgRating }}</td>
+					<td>
+						<a href="/delR/{{ rating.pk }}/" class="btn btn-danger">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<ul class="pager">
+		{% if hasPrev %}
+			<li class="previous"><a href="/admind/ratings/{{ prev }}/">&larr; Previous</a></li>
+		{% else %}
+			<li class="previous disabled"><a href="/admind/ratings/{{ page }}/">&larr; Previous</a></li>
+		{% endif %}
+		{% if hasNext %}
+			<li class="next"><a href="/admind/ratings/{{ next }}/">Next &rarr;</a></li>
+		{% else %}
+			<li class="next disabled"><a href="/admind/ratings/{{ page }}/">Next &rarr;</a></li>
+		{% endif %}
+	</ul>
+{% endblock %}

@@ -111,6 +111,14 @@ class MusicGenUser(models.Model):
 		pHashed = hashlib.sha512(pSalted).hexdigest()
 		# Check it against the stored one
 		return self.passwordHash == pHashed
+	def avgRating(self):
+		ratings = Rating.objects.filter(user = self)
+		if len(ratings) == 0:
+			return '--'
+		total = 0
+		for rating in ratings:
+			total += rating.value
+		return total / len(ratings)
 
 class SongWrapper(models.Model):
 

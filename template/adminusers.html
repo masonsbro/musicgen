@@ -1,0 +1,42 @@
+{% extends "admin.html" %}
+
+{% block adminusersactive %}class="active"{% endblock %}
+
+{% block admincontent %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Email</th>
+				<th>Average Rating</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+				<tr {% if user.isExtreme %}class="danger"{% endif %}>
+					<td>{{ user.pk }}</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.avgRating }}</td>
+					<td>
+						<a href="/delU/{{ user.pk }}/" class="btn btn-danger">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<ul class="pager">
+		{% if hasPrev %}
+			<li class="previous"><a href="/admind/users/{{ prev }}/">&larr; Previous</a></li>
+		{% else %}
+			<li class="previous disabled"><a href="/admind/users/{{ page }}/">&larr; Previous</a></li>
+		{% endif %}
+		{% if hasNext %}
+			<li class="next"><a href="/admind/users/{{ next }}/">Next &rarr;</a></li>
+		{% else %}
+			<li class="next disabled"><a href="/admind/users/{{ page }}/">Next &rarr;</a></li>
+		{% endif %}
+	</ul>
+{% endblock %}

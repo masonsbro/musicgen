@@ -62,6 +62,9 @@ SONGS_PER_ADMIN = 20
 # This is the number of ratings to display on each page of the admin dashboard.
 RATINGS_PER_ADMIN = 20
 
+# This is the number of users to display on each page of the admin dashboard.
+USERS_PER_ADMIN = 20
+
 # These are the error messages to display when a form fails to submit.
 ERROR_NO_EMAIL = "Please enter a valid email address."
 ERROR_NO_PASSWORD = "Please enter a valid password."
@@ -396,35 +399,53 @@ def updateFiles(req, context, id):
 @check_logged_in
 @only_logged_in
 @only_admin
-def admin(req, context, songPage = 0, ratingPage = 0):
-	songPage = int(songPage)
-	ratingPage = int(ratingPage)
-	songStart = songPage * SONGS_PER_ADMIN
-	ratingStart = ratingPage * RATINGS_PER_ADMIN
-	context['prevSongPage'] = songPage - 1
-	context['songPage'] = songPage
-	context['nextSongPage'] = songPage + 1
-	context['prevRatingPage'] = ratingPage - 1
-	context['ratingPage'] = ratingPage
-	context['nextRatingPage'] = ratingPage + 1
-	# Go 1 further to check for next button
-	songs = Song.objects.order_by('-pk')[songStart:(songStart + SONGS_PER_ADMIN + 1)]
-	ratings = Rating.objects.order_by('-pk')[ratingStart:(ratingStart + RATINGS_PER_ADMIN + 1)]
+def admin(req, context):
+	return redirect("/admind/songs/0/")
+
+@check_logged_in
+@only_logged_in
+@only_admin
+def adminSongs(req, context, page):
+	page = int(page)
+	start = page * SONGS_PER_ADMIN
+	context['prev'] = page - 1
+	context['page'] = page
+	context['next'] = page + 1
+	songs = Song.objects.order_by('-pk')[start:(start + SONGS_PER_ADMIN + 1)]
 	context['songs'] = songs[0:SONGS_PER_ADMIN]
+	context['hasNext'] = True if len(songs) == (SONGS_PER_ADMIN + 1) else False
+	context['hasPrev'] = True if page != 0 else False
+	return render(req, "adminsongs.html", context)
+
+@check_logged_in
+@only_logged_in
+@only_admin
+def adminRatings(req, context, page):
+	page = int(page)
+	start = page * RATINGS_PER_ADMIN
+	context['prev'] = page - 1
+	context['page'] = page
+	context['next'] = page + 1
+	ratings = Rating.objects.order_by('-pk')[start:(start + RATINGS_PER_ADMIN + 1)]
 	context['ratings'] = ratings[0:RATINGS_PER_ADMIN]
-	try:
-		n = songs[SONGS_PER_ADMIN]
-		context['nextSong'] = True
-	except:
-		context['nextSong'] = False
-	context['prevSong'] = False if songPage == 0 else True
-	try:
-		n = ratings[RATINGS_PER_ADMIN]
-		context['nextRating'] = True
-	except:
-		context['nextRating'] = False
-	context['prevRating'] = False if ratingPage == 0 else True
-	return render(req, "admin.html", context)
+	context['hasNext'] = True if len(ratings) == (RATINGS_PER_ADMIN + 1) else False
+	context['hasPrev'] = True if page != 0 else False
+	return render(req, "adminratings.html", context)
+
+@check_logged_in
+@only_logged_in
+@only_admin
+def adminUsers(req, context, page):
+	page = int(page)
+	start = page * USERS_PER_ADMIN
+	context['prev'] = page - 1
+	context['page'] = page
+	context['next'] = page + 1
+	users = MusicGenUser.objects.order_by('-pk')[start:(start + USERS_PER_ADMIN + 1)]
+	context['users'] = users[0:USERS_PER_ADMIN]
+	context['hasNext'] = True if len(users) == (USERS_PER_ADMIN + 1) else False
+	context['hasPrev'] = True if page != 0 else False
+	return render(req, "adminusers.html", context)
 
 @check_logged_in
 def song(req, context, id):
@@ -453,11 +474,3 @@ def mutate(req, context, id):
 	newSong.generateFile()
 	newSong.save()
 	return redirect("/admind/")
-
-@check_logged_in
-@only_logged_in
-@only_admin
-def user(req, context, id):
-	user = MusicGenUser.objects.get(pk = id)
-	####### TODO
-	return render(req, "user.html", context)

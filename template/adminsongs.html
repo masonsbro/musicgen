@@ -1,0 +1,75 @@
+{% extends "admin.html" %}
+
+{% block adminsongsactive %}class="active"{% endblock %}
+
+{% block admincontent %}
+	<a href="/random/" class="btn btn-primary btn-block" style="margin: 1em 0">
+		<span class="glyphicon glyphicon-music"></span>&nbsp;
+		Random
+	</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Listen</th>
+				<th>Generation</th>
+				<th># Ratings</th>
+				<th>Rating</th>
+				<th>Update</th>
+				<th>Mutate</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for song in songs %}
+				<tr
+				{% if not song.latest %}class="active"
+				{% elif not song.wrapper.active %}class="primary"
+				{% endif %}
+				>
+					<td><a href="/song/{{ song.pk }}/">{{ song.pk }}</a></td>
+					<td>
+						{% if song.wav %}
+							<audio controls>
+								<source src="{{ song.wav.url }}" type="audio/wav">
+								Upgrade yo browser, yo
+							</audio>
+						{% else %}
+							Error loading file
+						{% endif %}
+					</td>
+					<td>{{ song.generation }}</td>
+					<td>{{ song.numRatings }}</td>
+					<td>{{ song.avgRating }}</td>
+					<td>
+						<a href="/udpate/{{ song.pk }}/" class="btn btn-primary">
+							<span class="glyphicon glyphicon-refresh"></span>
+						</a>
+					</td>
+					<td>
+						<a href="/mut/{{ song.pk }}/" class="btn btn-primary">
+							<span class="glyphicon glyphicon-random"></span>
+						</a>
+					</td>
+					<td>
+						<a href="/del/{{ song.pk }}/" class="btn btn-danger">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<ul class="pager">
+		{% if hasPrev %}
+			<li class="previous"><a href="/admind/songs/{{ prev }}/">&larr; Previous</a></li>
+		{% else %}
+			<li class="previous disabled"><a href="/admind/songs/{{ page }}/">&larr; Previous</a></li>
+		{% endif %}
+		{% if hasNext %}
+			<li class="next"><a href="/admind/songs/{{ next }}/">Next &rarr;</a></li>
+		{% else %}
+			<li class="next disabled"><a href="/admind/songs/{{ page }}/">Next &rarr;</a></li>
+		{% endif %}
+	</ul>
+{% endblock %}
