@@ -23,7 +23,7 @@
 			<tbody>
 				{% for song in history %}
 					<tr>
-						<td><a href="/song/{{ song.pk }}">{{ song.pk }}</a></td>
+						<td><a href="/song/{{ song.pk }}/">{{ song.pk }}</a></td>
 						<td>
 							{% if song.wav %}
 								<audio controls>
