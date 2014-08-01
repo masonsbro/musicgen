@@ -391,10 +391,10 @@ def rate(req, context, id, rating):
 
 @check_logged_in
 @only_logged_in
-def updateFiles(req, context, id):
+def updateFiles(req, context, id, page):
 	song = Song.objects.get(pk = id)
 	song.generateFile()
-	return redirect("/admind/")
+	return redirect("/admind/songs/" + page + "/")
 
 @check_logged_in
 @only_logged_in
@@ -457,15 +457,15 @@ def song(req, context, id):
 @check_logged_in
 @only_logged_in
 @only_admin
-def delete(req, context, id):
+def delete(req, context, id, page):
 	song = Song.objects.get(pk = id)
 	song.delete()
-	return redirect("/admind/")
+	return redirect("/admind/songs/" + page + "/")
 
 @check_logged_in
 @only_logged_in
 @only_admin
-def mutate(req, context, id):
+def mutate(req, context, id, page):
 	song = Song.objects.get(pk = id)
 	song.latest = False
 	baseSong = Song.objects.filter(wrapper = song.wrapper).order_by('-avgRating')[0]
@@ -473,4 +473,28 @@ def mutate(req, context, id):
 	newSong.save()
 	newSong.generateFile()
 	newSong.save()
-	return redirect("/admind/")
+	return redirect("/admind/songs/" + page + "/")
+
+@check_logged_in
+@only_logged_in
+@only_admin
+def deleteUser(req, context, id, page):
+	user = MusicGenUser.objects.get(pk = id)
+	user.delete()
+	return redirect("/admind/users/" + page + "/")
+
+@check_logged_in
+@only_logged_in
+@only_admin
+def deleteRating(req, context, id, page):
+	rating = Rating.objects.get(pk = id)
+	oldTotal = rating.song.avgRating * rating.song.numRatings
+	newTotal = oldTotal - rating.value
+	rating.song.numRatings -= 1
+	if rating.song.numRatings > 0:
+		rating.song.avgRating = newTotal / rating.song.numRatings
+	else:
+		rating.song.avgRating = 0
+	rating.song.save()
+	rating.delete()
+	return redirect("/admind/ratings/" + page + "/")
