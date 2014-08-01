@@ -142,9 +142,13 @@ def about(req, context):
 def list(req, context):
 	songs = Song.objects.filter(latest = True, wrapper__active = True).order_by('-pk')
 	context['songs'] = []
-	user = MusicGenUser.objects.get(email = req.session['email'])
-	for song in songs:
-		context['songs'].append((song, song.hasBeenRatedBy(user)))
+	try:
+		user = MusicGenUser.objects.get(email = req.session['email'])
+		for song in songs:
+			context['songs'].append((song, song.hasBeenRatedBy(user)))
+	except:
+		for song in songs:
+			context['songs'].append((song, True))
 	otherSongs = Song.objects.filter(latest = True, wrapper__active = False).order_by('-pk')
 	for song in otherSongs:
 		context['songs'].append((song, False))
