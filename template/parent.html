@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>{% block title %}MusicGen{% endblock %}</title>
+		<title>{% block title %}{% endblock %} | MusicGen</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="/static/style.css">
@@ -114,6 +114,8 @@
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 			ga('create', 'UA-53425370-1', 'auto');
+			ga('require', 'displayfeatures');
+			ga('require', 'linkid', 'linkid.js');
 			ga('send', 'pageview');
 		</script>
 	</body>
