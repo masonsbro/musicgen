@@ -3,6 +3,7 @@ from django.core.validators import validate_email
 from django.forms import ValidationError
 from django.core.mail import send_mail
 from django.core.files.storage import default_storage
+from django.conf import settings
 
 from musicgenapp.models import *
 
@@ -40,8 +41,8 @@ If you did not request this password reset, you can safely disregard this email.
 PW_RESET_FROM = "masonsbro@pearlandnerd.com"
 
 # These are the login credentials for SendGrid (used to send password reset emails)
-SG_USERNAME = "app27699523@heroku.com"
-SG_PASSWORD = "4tnoo5h6"
+SG_USERNAME = settings.SG_USERNAME
+SG_PASSWORD = settings.SG_PASSWORD
 
 # This is the number of ratings each song should receive before moving to the next generation.
 GENERATION_THRESHOLD = 3
