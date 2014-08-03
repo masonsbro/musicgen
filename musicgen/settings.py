@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ri&o(@1puy7idrn!gtwrrx7o*d4=5=yvo)#m!icc()$7ng+)mr'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -58,16 +58,7 @@ WSGI_APPLICATION = 'musicgen.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'ec2-54-197-238-8.compute-1.amazonaws.com',
-        'PORT': '5432',
-        'NAME': 'd5pr2lc9n6k9h4',
-        'USER': 'kbkfmmtyebtojq',
-        'PASSWORD': 'OKOM9XAQrdJ_gngBI7tow_JoWB',
-    }
-}
+DATABASES = {}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -90,7 +81,7 @@ STATIC_URL = '/static/'
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
-#DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -118,11 +109,11 @@ AWS_S3_SECURE_URLS = False
 # don't add compelx auth-related query parameters for requests
 AWS_QUERYSTRING_AUTH = False
 # access key id
-AWS_S3_ACCESS_KEY_ID = 'AKIAJENMPVSPWEURXMHA'
+AWS_S3_ACCESS_KEY_ID = os.environ['S3_ACCESS_KEY_ID']
 # secret access key
-AWS_S3_SECRET_ACCESS_KEY = '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'
+AWS_S3_SECRET_ACCESS_KEY = os.environ['S3_SECRET_ACCESS_KEY']
 # storage bucket name
 AWS_STORAGE_BUCKET_NAME = 'musicgen'
 
-SG_USERNAME = "app27699523@heroku.com"
-SG_PASSWORD = "4tnoo5h6"
+SG_USERNAME = os.environ['SENDGRID_USERNAME']
+SG_PASSWORD = os.environ['SENDGRID_PASSWORD']
