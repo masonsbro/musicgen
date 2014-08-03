@@ -6,4 +6,8 @@ Push to heroku with "git push origin hk:master" (map local hk to heroku's master
 
 Push to github with "git push github master" (push master)
 
-Make changes in local master branch. Push to github. Checkout hk and merge in master, then push to heroku
+Make changes in hk branch
+Push to heroku
+When finished, merge into master
+git rm musicgen/settings.py in master
+Push to github
