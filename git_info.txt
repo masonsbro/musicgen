@@ -6,4 +6,4 @@ Push to heroku with "git push origin hk:master" (map local hk to heroku's master
 
 Push to github with "git push github master" (push master)
 
-Keep settings.py untracked. When done making changes, make branch hk and add it back, then do pushes.
+Make changes in local master branch. Push to github. Checkout hk and merge in master, then push to heroku
